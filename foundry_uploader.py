@@ -12,17 +12,20 @@ urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # Read the token and host from environment variables
 TOKEN = os.getenv("FOUNDRY_TOKEN")
 HOST = os.getenv("FOUNDRY_HOST")
+INPUT_PATH = os.getenv("INPUT_PATH")
 
 if not TOKEN:
     raise ValueError("The environment variable 'FOUNDRY_TOKEN' is not set")
 if not HOST:
     raise ValueError("The environment variable 'FOUNDRY_HOST' is not set")
+if not INPUT_PATH:
+    raise ValueError("The environment variable 'INPUT_PATH' is not set")
 
 # Foundry Target RID
 TARGET_DATASET_RID = "ri.foundry.main.dataset.d2a0bda7-1751-47b4-b275-217aee0a8c22"
 
 # Directory to scan
-DIRECTORY = Path(r"C:\Users\arukavina\Downloads\25 New Data")
+DIRECTORY = Path(INPUT_PATH)
 # File extension to filter
 FILE_EXTENSION = ".rpt"  # Change this to the desired file extension
 
@@ -64,7 +67,9 @@ uploaded_files = load_uploaded_files()
 
 # Loop through the contents of the directory and upload new files
 for file in DIRECTORY.iterdir():
-    if file.is_file() and file.suffix == FILE_EXTENSION and file.name not in uploaded_files:
+    if file.name in uploaded_files:
+        print(f'Skipping file: {file.name}')
+    if file.is_file() and file.suffix == FILE_EXTENSION:
         try:
             print(f"Uploading: {file.name}")
 
