@@ -9,10 +9,12 @@ import json
 # Suppress only the single warning from urllib3.
 urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 
-# Read the token and host from environment variables
+# Read the token, host, PATH and target RID from environment variables
 TOKEN = os.getenv("FOUNDRY_TOKEN")
 HOST = os.getenv("FOUNDRY_HOST")
 INPUT_PATH = os.getenv("INPUT_PATH")
+TARGET_DATASET_RID = os.getenv("TARGET_DATASET_RID")
+
 
 if not TOKEN:
     raise ValueError("The environment variable 'FOUNDRY_TOKEN' is not set")
@@ -20,9 +22,8 @@ if not HOST:
     raise ValueError("The environment variable 'FOUNDRY_HOST' is not set")
 if not INPUT_PATH:
     raise ValueError("The environment variable 'INPUT_PATH' is not set")
-
-# Foundry Target RID
-TARGET_DATASET_RID = "ri.foundry.main.dataset.d2a0bda7-1751-47b4-b275-217aee0a8c22"
+if not TARGET_DATASET_RID:
+    raise ValueError("The environment variable 'TARGET_DATASET_RID' is not set")
 
 # Directory to scan
 DIRECTORY = Path(INPUT_PATH)
