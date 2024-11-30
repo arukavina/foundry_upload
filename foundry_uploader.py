@@ -70,6 +70,7 @@ uploaded_files = load_uploaded_files()
 for file in DIRECTORY.iterdir():
     if file.name in uploaded_files:
         print(f'Skipping file: {file.name}')
+        continue
     if file.is_file() and file.suffix == FILE_EXTENSION:
         try:
             print(f"Uploading: {file.name}")
