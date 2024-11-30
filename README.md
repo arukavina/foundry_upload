@@ -55,7 +55,7 @@ export TARGET_DATASET_RID="your_dataset_rid"
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/foundry-file-upload.git
+   git clone https://github.com/arukavina/foundry_upload.git
    cd foundry-file-upload
    ```
 
