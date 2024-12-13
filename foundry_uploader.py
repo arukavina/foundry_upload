@@ -59,6 +59,8 @@ def upload_file_to_foundry(ctx, file_path):
             str(file_path), TARGET_DATASET_RID, path_in_dataset, Callback=pbar.update
         )
 
+    boto3_client.close()
+
 
 # Initialize Foundry context
 ctx = FoundryContext(token_provider=JWTTokenProvider(host=HOST, jwt=TOKEN))
@@ -66,6 +68,8 @@ ctx = FoundryContext(token_provider=JWTTokenProvider(host=HOST, jwt=TOKEN))
 # Load previously uploaded files
 uploaded_files = load_uploaded_files()
 
+print(f'Uploading to {TARGET_DATASET_RID}')
+print('---------------------------------')
 # Loop through the contents of the directory and upload new files
 for file in DIRECTORY.iterdir():
     if file.name in uploaded_files:
@@ -73,7 +77,7 @@ for file in DIRECTORY.iterdir():
         continue
     if file.is_file() and file.suffix == FILE_EXTENSION:
         try:
-            print(f"Uploading: {file.name}")
+            print(f"Uploading file: {file.name}")
 
             upload_file_to_foundry(ctx, file)
 
